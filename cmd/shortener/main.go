@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/Twix298/shortener/internal/app/url_generator"
 )
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
@@ -15,11 +17,13 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 	bytes, _ := io.ReadAll(r.Body)
 	fmt.Print(string(bytes))
 	fmt.Println('\n')
-	resp := "ok"
+	resp := url_generator.EncodeURL(string(bytes))
+	fmt.Print(resp)
+	fmt.Println('\n')
 	w.Header().Set("content-type", "application/json")
 	// устанавливаем код 200
 	w.WriteHeader(http.StatusCreated)
-	// пишем тело ответа
+	resp = "http://localhost:8080/" + resp
 	w.Write([]byte(resp))
 }
 
