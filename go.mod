@@ -1,3 +1,3 @@
-module github.com/Twix298/shortener.git
+module github.com/Twix298/shortener
 
-go 1.23.4
+go 1.22.10
