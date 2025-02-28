@@ -2,6 +2,7 @@ package config
 
 import (
 	"flag"
+	"os"
 )
 
 var (
@@ -14,4 +15,11 @@ func Parse() {
 	flag.StringVar(&BaseURL, "b", BaseURL, "base URL for shorten URL response")
 
 	flag.Parse()
+
+	if val := os.Getenv("SERVER_ADDRESS"); val != "" {
+		Port = val
+	}
+	if val := os.Getenv("BASE_URL"); val != "" {
+		BaseURL = val
+	}
 }
