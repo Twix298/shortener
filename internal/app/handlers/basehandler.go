@@ -17,19 +17,7 @@ func MakeBaseHandler(url string, strorage storage.Storage) *BaseHandler {
 	return &BaseHandler{BaseUrl: url, Storage: strorage}
 }
 
-func (base *BaseHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		fmt.Printf("POST Method\n")
-		base.getShortUrl(w, r)
-	} else if r.Method == http.MethodGet {
-		fmt.Printf("Get Method\n")
-		base.getFullUrl(w, r)
-	} else {
-		http.Error(w, "Отправлен неподходящий метод", http.StatusMethodNotAllowed)
-	}
-}
-
-func (base *BaseHandler) getShortUrl(w http.ResponseWriter, r *http.Request) {
+func (base *BaseHandler) GetShortUrl(w http.ResponseWriter, r *http.Request) {
 	bytes, _ := io.ReadAll(r.Body)
 	stringUrl := string(bytes)
 	fmt.Printf("%s\n", stringUrl)
@@ -46,7 +34,7 @@ func (base *BaseHandler) getShortUrl(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(resp))
 }
 
-func (base *BaseHandler) getFullUrl(w http.ResponseWriter, r *http.Request) {
+func (base *BaseHandler) GetFullUrl(w http.ResponseWriter, r *http.Request) {
 	hash := r.URL.Path[1:]
 	fmt.Printf("%s\n", hash)
 	var err error

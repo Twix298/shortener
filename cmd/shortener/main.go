@@ -10,7 +10,6 @@ import (
 )
 
 func run() error {
-	mux := http.NewServeMux()
 	generatorUrl := url_generator.Generator{Lenght: 8}
 	storage := storage.Instance(generatorUrl)
 	host := "http://localhost:8080"
@@ -18,8 +17,8 @@ func run() error {
 		BaseUrl: host,
 		Storage: storage,
 	}
-	mux.Handle("/", &baseHandler)
-	return http.ListenAndServe(":8080", mux)
+	return http.ListenAndServe(":8080", newRouter(&baseHandler))
+
 }
 
 func main() {
